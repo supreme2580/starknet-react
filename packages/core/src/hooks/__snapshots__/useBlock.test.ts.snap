@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`useBlock > returns an error if the block doesn't exist > 
+      {
+        "data": undefined,
+        "error": [LibraryError: RPC: starknet_getBlockWithTxHashes with params {"block_id":{"block_number":999999}}
+       24: Block not found: undefined],
+        "fetchStatus": "idle",
+        "isError": true,
+        "isFetching": false,
+        "isLoading": false,
+        "isPending": false,
+        "isSuccess": false,
+        "refetch": [Function],
+        "status": "error",
+      }
+     1`] = `
+{
+  "data": undefined,
+  "error": [Error: fetch failed],
+  "fetchStatus": "idle",
+  "isError": true,
+  "isFetching": false,
+  "isLoading": false,
+  "isPending": false,
+  "isSuccess": false,
+  "refetch": [Function],
+  "status": "error",
+}
+`;
