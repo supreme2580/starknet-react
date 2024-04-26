@@ -1,23 +1,23 @@
-import { describe, expect, it } from "vitest";
-import { defaultConnector } from "../../test/devnet";
-import { act, renderHook } from "../../test/react";
+import { describe, expect, it } from 'vitest'
+import { defaultConnector } from '../../test/devnet'
+import { act, renderHook } from '../../test/react'
 
-import { useAccount } from "./useAccount";
-import { useConnect } from "./useConnect";
-import { useDisconnect } from "./useDisconnect";
+import { useAccount } from './useAccount'
+import { useConnect } from './useConnect'
+import { useDisconnect } from './useDisconnect'
 
 function useAccountWithConnect() {
   return {
     account: useAccount(),
     connect: useConnect(),
     disconnect: useDisconnect(),
-  };
+  }
 }
 
-describe("useAccount", () => {
-  describe("returns no account", () => {
-    it("on mount", async () => {
-      const { result } = renderHook(() => useAccountWithConnect());
+describe('useAccount', () => {
+  describe('returns no account', () => {
+    it('on mount', async () => {
+      const { result } = renderHook(() => useAccountWithConnect())
 
       expect(result.current.account).toMatchInlineSnapshot(`
         {
@@ -27,23 +27,23 @@ describe("useAccount", () => {
           "isReconnecting": false,
           "status": "disconnected",
         }
-      `);
-    });
+      `)
+    })
 
-    it("after the user disconnects their wallet", async () => {
-      const { result } = renderHook(() => useAccountWithConnect());
+    it('after the user disconnects their wallet', async () => {
+      const { result } = renderHook(() => useAccountWithConnect())
 
       await act(async () => {
         await result.current.connect.connectAsync({
           connector: defaultConnector,
-        });
-      });
+        })
+      })
 
-      expect(result.current.account.isConnected).toBeTruthy();
+      expect(result.current.account.isConnected).toBeTruthy()
 
       await act(async () => {
-        await result.current.disconnect.disconnectAsync();
-      });
+        await result.current.disconnect.disconnectAsync()
+      })
 
       expect(result.current.account).toMatchInlineSnapshot(`
         {
@@ -53,23 +53,23 @@ describe("useAccount", () => {
           "isReconnecting": false,
           "status": "disconnected",
         }
-      `);
-    });
-  });
+      `)
+    })
+  })
 
-  describe("returns the account", () => {
-    it("after the user connects their wallet", async () => {
-      const { result } = renderHook(() => useAccountWithConnect());
+  describe('returns the account', () => {
+    it('after the user connects their wallet', async () => {
+      const { result } = renderHook(() => useAccountWithConnect())
 
       await act(async () => {
-        result.current.connect.connect({ connector: defaultConnector });
-      });
+        result.current.connect.connect({ connector: defaultConnector })
+      })
 
       // skip serializing mock connector
       expect({
         ...result.current.account,
         connector: undefined,
-      }).toMatchInlineSnapshot(`
+      }).toMatchSnapshot(`
         {
           "account": Account {
             "address": "0x79d719ac68e56635121bf9317fae4f281e23b7ad95b6900ccafd2b9668b410f",
@@ -104,7 +104,7 @@ describe("useAccount", () => {
           "isReconnecting": false,
           "status": "connected",
         }
-      `);
-    });
-  });
-});
+      `)
+    })
+  })
+})

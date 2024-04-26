@@ -1,18 +1,18 @@
-import { describe, expect, it } from "vitest";
-import { renderHook, waitFor } from "../../test/react";
+import { describe, expect, it } from 'vitest'
+import { renderHook, waitFor } from '../../test/react'
 
-import { useBlock } from "./useBlock";
+import { useBlock } from './useBlock'
 
-describe("useBlock", () => {
-  it("returns the latest block", async () => {
-    const { result } = renderHook(() => useBlock());
+describe('useBlock', () => {
+  it('returns the latest block', async () => {
+    const { result } = renderHook(() => useBlock())
 
     await waitFor(() => {
-      expect(result.current.status).toEqual("success");
-    });
+      expect(result.current.status).toEqual('success')
+    })
 
-    const { data, ...rest } = result.current;
-    expect(data).toBeDefined();
+    const { data, ...rest } = result.current
+    expect(data).toBeDefined()
     expect(rest).toMatchInlineSnapshot(`
       {
         "error": null,
@@ -25,19 +25,19 @@ describe("useBlock", () => {
         "refetch": [Function],
         "status": "success",
       }
-    `);
-  });
+    `)
+  })
 
   it("returns an error if the block doesn't exist", async () => {
-    const { result } = renderHook(() => useBlock({ blockIdentifier: 999999 }));
+    const { result } = renderHook(() => useBlock({ blockIdentifier: 999999 }))
 
     await waitFor(() => {
-      expect(result.current.isError).toBeTruthy();
-    });
+      expect(result.current.isError).toBeTruthy()
+    })
 
-    const { data } = result.current;
-    expect(data).toBeUndefined();
-    expect(result.current).toMatchInlineSnapshot(`
+    const { data } = result.current
+    expect(data).toBeUndefined()
+    expect(result.current).toMatchSnapshot(`
       {
         "data": undefined,
         "error": [LibraryError: RPC: starknet_getBlockWithTxHashes with params {"block_id":{"block_number":999999}}
@@ -51,6 +51,6 @@ describe("useBlock", () => {
         "refetch": [Function],
         "status": "error",
       }
-    `);
-  });
-});
+    `)
+  })
+})
